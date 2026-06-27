@@ -3,7 +3,9 @@
 !.gitignore
 !index.html
 !hero.jpg
-!about.png
+!about.jpg
 !before-after-01.mp4
 !hero-video-01.mp4
-!logo-polished.png
+!logo-polished.webp
+# extracted gallery/logo images (referenced by IMAGES{} as files)
+!img/
