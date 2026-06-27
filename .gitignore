@@ -1,0 +1,7 @@
+# Deploy only the live site assets; keep heavy source files local
+/*
+!.gitignore
+!index.html
+!hero.jpg
+!about.png
+!before-after-01.mp4
