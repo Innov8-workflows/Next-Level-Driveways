@@ -68,9 +68,7 @@ h1,h2,h3,h4{font-family:'Archivo',sans-serif;line-height:1.05;letter-spacing:-.0
 
 /* HERO */
 .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;color:#fff;padding:120px 22px 90px}
-.hero-slides{position:absolute;inset:0;z-index:0}
-.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.4s ease;transform:scale(1.06);animation:kb 9s ease forwards}
-.hero-slide.active{opacity:1}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
 @keyframes kb{to{transform:scale(1)}}
 .hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(34,25,69,.62) 0%,rgba(34,25,69,.42) 38%,rgba(34,25,69,.78) 100%)}
 .hero-in{position:relative;z-index:2;max-width:880px;display:flex;flex-direction:column;align-items:center}
@@ -79,9 +77,6 @@ h1,h2,h3,h4{font-family:'Archivo',sans-serif;line-height:1.05;letter-spacing:-.0
 .hero h1{color:#fff;font-size:clamp(2.1rem,5.4vw,3.7rem);font-weight:900;text-transform:uppercase;text-shadow:0 4px 24px rgba(0,0,0,.35)}
 .hero p{font-size:clamp(1rem,2vw,1.18rem);color:rgba(255,255,255,.94);max-width:62ch;margin:18px auto 30px}
 .hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
-.hero-dots{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:10px}
-.hero-dots button{width:11px;height:11px;border-radius:50%;border:2px solid #fff;background:transparent;cursor:pointer;transition:.2s;padding:0}
-.hero-dots button.on{background:#fff;width:30px;border-radius:6px}
 
 /* TRUST STRIP */
 .trust{background:var(--indigo);color:#fff;padding:26px 0}
@@ -262,7 +257,6 @@ h1,h2,h3,h4{font-family:'Archivo',sans-serif;line-height:1.05;letter-spacing:-.0
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;scroll-behavior:auto!important;transition:none!important}
-  .hero-slide{transition:opacity .4s ease!important}
 }
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
 .reveal.in{opacity:1;transform:none}
@@ -293,7 +287,9 @@ h1,h2,h3,h4{font-family:'Archivo',sans-serif;line-height:1.05;letter-spacing:-.0
 
 <!-- HERO -->
 <section class="hero" id="top">
-  <div class="hero-slides" id="heroSlides"></div>
+  <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="hero.jpg">
+    <source src="hero-video-01.mp4" type="video/mp4">
+  </video>
   <div class="hero-in">
     <img class="hero-logo" data-img="logo_light" alt="Next Level Driveways — Resin Bound">
     <span class="hero-eyebrow">Resin Bound Specialists · UK-Wide</span>
@@ -304,7 +300,6 @@ h1,h2,h3,h4{font-family:'Archivo',sans-serif;line-height:1.05;letter-spacing:-.0
       <a href="tel:+447884613467" class="btn btn-ghost">Call 07884 613467</a>
     </div>
   </div>
-  <div class="hero-dots" id="heroDots"></div>
 </section>
 
 <!-- TRUST -->
@@ -552,19 +547,6 @@ addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>20));
 document.getElementById('burger').onclick=()=>nav.classList.toggle('open');
 document.querySelectorAll('#navlinks a').forEach(a=>a.onclick=()=>nav.classList.remove('open'));
 
-/* HERO SLIDER */
-const heroImgs=['hero','p5','p3'];
-const slidesWrap=document.getElementById('heroSlides');
-const dotsWrap=document.getElementById('heroDots');
-heroImgs.forEach((k,i)=>{
-  const s=document.createElement('div');s.className='hero-slide'+(i===0?' active':'');
-  s.style.backgroundImage=`url(${IMAGES[k]})`;slidesWrap.appendChild(s);
-  const d=document.createElement('button');d.className=(i===0?'on':'');d.setAttribute('aria-label','Slide '+(i+1));
-  d.onclick=()=>go(i);dotsWrap.appendChild(d);
-});
-let hi=0;const slides=[...slidesWrap.children],dots=[...dotsWrap.children];
-function go(n){slides[hi].classList.remove('active');dots[hi].classList.remove('on');hi=n;slides[hi].classList.add('active');dots[hi].classList.add('on');}
-let heroTimer=setInterval(()=>go((hi+1)%slides.length),5500);
 
 /* SERVICES */
 const services=[
